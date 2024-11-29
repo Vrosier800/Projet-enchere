@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout-enchere( 
+                    titrePage=~{:: title},
+                    contenuPage=~{:: main},
+                    ressourcesSupp=~{:: #ressources})}">
+
+<head>
+    <title data-th-text="#{article.titre}"></title>
+    <th:block id="ressources">
+        <link rel="stylesheet" data-th-href="@{/css/index.css}">
+        <link rel="stylesheet" data-th-href="@{/css/general.css}">   
+        <script data-th-src="@{js/script.js}" defer></script>
+    </th:block>
+</head>
+
+<body>
+    <main class="center-main">
+        <div class="form-container">
+            <h2 data-th-text="#{article.h2}"></h2>
+            <form data-th-action="@{/}" method="POST" id="form-filtre-combine">
+                <!-- Recherche par nom -->
+                <label for="search" data-th-text="#{article.label}"></label>
+                <input type="text" id="search" name="search" data-th-placeholder="#{article.input.placeholder}">
+
+                <!-- Sélection de catégorie -->
+                <label for="category" data-th-text="#{article.label.category}"></label>
+                <select id="category" name="category">
+                    <option value="all">Toutes</option>
+                    <option data-th-each="categorie : ${categorieEnSession}"
+                            data-th-value="${categorie.getId}"
+                            data-th-text="${categorie.getLibelle}"></option>
+                </select>
+
+                <!-- Achats et Ventes (Types d'enchères) -->
+                <th:block data-th-if="${#authorization.expression('isAuthenticated()')}">
+                    <!-- Achats -->
+                    <div class="achatsVentesContainer">
+                        <div class="achats">
+                            <label for="achats" data-th-text="#{article.label.achats}"></label>
+                            <input type="radio" id="achats" name="type" value="achats" checked>
+                            <select id="achats-select" name="achats">
+                                <option value="achatsOuvertes" data-th-text="#{article.option.achatsOuvertes}"></option>
+                                <option value="achatsEnCours" data-th-text="#{article.option.achatsEnCours}"></option>
+                                <option value="achatsGagnees" data-th-text="#{article.option.achatsGagnees}"></option>
+                            </select>
+                        </div>
+
+                        <!-- Ventes -->
+                        <div class="ventes">
+                            <label for="ventes" data-th-text="#{article.label.ventes}"></label>
+                            <input type="radio" id="ventes" name="type" value="ventes">
+                            <select id="ventes-select" name="ventes" disabled>
+                                <option value="ventesEnCours" data-th-text="#{article.option.ventesEnCours}"></option>
+                                <option value="ventesNonDebutees" data-th-text="#{article.option.ventesNonDebutees}"></option>
+                                <option value="ventesTerminees" data-th-text="#{article.option.ventesTerminees}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </th:block>
+
+                <!-- Boutons de recherche et d'annulation -->
+                <div class="button-container">
+                    <button type="submit" data-th-text="#{article.submit}"></button>
+                    <button type="reset" class="cancel" data-th-text="#{article.cancel}"></button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Liste des enchères -->
+        <h1 data-th-text="#{article.h1}"></h1>
+        <div class="article-grid">
+            <div data-th-each="article : ${articles}" class="article-container">
+                <a data-th-href="@{/article/detail(id=${article.id})}">
+                
+                	<th:block data-th-if="${article.image != null}">
+	                    <div class="article-image">
+	                        <img data-th-src="@{'/imagesUtilisateurs/' + ${article.image.nom}}" data-th-alt="#{article.img.alt}">
+	                    </div>
+                    </th:block>
+                    <th:block data-th-if="${article.image == null}">
+	                    <div class="article-image">
+	                        <img src="/images/kings.png" data-th-alt="#{article.img.alt}">
+	                    </div>
+                    </th:block>
+
+
+
+                    <div class="article-title">
+                        <h2 data-th-text="${article.nom}"></h2>
+                    </div>
+
+                    <div class="article-price">
+                   		<p data-th-if="${article.prixVente >= article.prixInitial}" data-th-text="#{article.p.prix} + ' ' + ${article.prixVente} + ' point(s)'"></p>
+                        <p data-th-if="${article.prixVente < article.prixInitial}" data-th-text="#{article.p.prix} + ' ' + ${article.prixInitial} + ' point(s)'"></p>
+                    </div>
+
+                    <div class="article-end-date">
+                        <p data-th-text="#{article.p.fin} + ' ' + ${article.dateFinEncheres}"></p>
+                    </div>
+
+                    <div class="article-seller">
+                        <div data-th-if="${#authorization.expression('isAuthenticated()')}">
+                            <p data-th-text="#{article.p.vendeur} + ' '"></p>
+                            <a data-th-href="@{/profile(pseudo=${article.vendeur.pseudo})}"
+                               data-th-text="${article.vendeur.pseudo}"></a>
+                        </div>
+                        <div data-th-if="${!#authorization.expression('isAuthenticated()')}">
+                            <p data-th-text="#{article.p.vendeur} + ' ' + ${article.vendeur.pseudo}"></p>
+                        </div>
+                        <th:block data-th-if="${#authorization.expression('isAuthenticated()')}">
+                            <div data-th-if="${membreEnSession.pseudo == article.vendeur.pseudo && article.statut == 0}">
+                                <a data-th-href="@{/article/modifier(id=${article.id})}" data-th-text="#{article.modifier.annuler}"></a>
+                            </div>
+                        </th:block>
+                    </div>
+                </a>
+            </div>            
+        </div>
+        <div>
+    <span th:text="'Page ' + ${articles.number + 1} + ' - ' + ${articles.totalPages}"></span>
+	   <a th:if="${articles.hasPrevious()}" 
+	   th:href="@{/(page=${articles.number - 1}, size=${articles.size}, search=${search}, category=${category})}">Précédent</a>
+	
+	<a th:if="${articles.hasNext()}" 
+	   th:href="@{/(page=${articles.number + 1}, size=${articles.size}, search=${search}, category=${category})}">Suivant</a>
+	</div>
+	    
+    </main>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+<div xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-form-article">
+			<div data-th-replace="~{fragments/errors/fragment-errors :: frag-errors}"></div>
+			<ul class="flex-outer">
+				<li>
+					<label for="inputNom" data-th-text="#{creer.input.nom}"></label> 
+					<input  type="text" id="inputNom" data-th-field="*{nom}" />
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('nom')}"></div>
+				</li>
+				<li>
+					<label for="taDescript" data-th-text="#{creer.input.description}"></label> 
+					<textarea  id="taDescript" data-th-field="*{description}" rows="3"  maxlength="250"></textarea>
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('description')}"></div>
+				</li>
+				<li>
+				<label for="inputRetrait" data-th-text="#{creer.input.categorie}"></label>
+					<select type="text" id="inputCategorie" data-th-field="*{categorie}" >
+						<option  data-th-each="categorie : ${categorieEnSession}" data-th-text="${categorie.libelle}" data-th-value="${categorie.id}">
+					</select >
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('categorie')}"></div>
+				</li>
+				<li>
+					<label for="inputDateDebut" data-th-text="#{creer.input.datedebut}"></label> 
+					<input  type="date" id="inputDateDebut" data-th-field="*{dateDebutEncheres}"  />
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('dateDebutEncheres')}"></div>
+				</li>
+				<li>
+					<label for="inputDateFin" data-th-text="#{creer.input.datefin}"></label> 
+					<input  type="date" id="inputDateFin" data-th-field="*{dateFinEncheres}"  />
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('dateFinEncheres')}"></div>
+				</li>
+				<li>
+					<label for="inputPrixInitial" data-th-text="#{creer.input.miseaprix}"></label> 
+					<input  type="number" id="inputPrixInitial" data-th-field="*{prixInitial}"  />
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('prixInitial')}"></div>
+				</li>
+				<li>
+				<label for="inputRetrait" data-th-text="#{creer.input.retrait}"></label>
+					<select type="text" id="inputRetrait" data-th-field="*{retrait}"   >
+						<option data-th-each="adresse : ${adresseEnSession}" data-th-text="${adresse.rue +' '+ adresse.codePostal +' '+ adresse.ville}" 
+						data-th-value="${adresse.id}">
+					</select >
+					<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('retrait')}"></div>
+				</li>
+			</ul>
+		</div>

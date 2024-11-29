@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere( 
+                    titrePage=~{:: title},
+                    contenuPage=~{:: main},
+                    ressourcesSupp=~{:: #ressources-css})}">
+
+<head>
+<title data-th-text="#{article.titre}"></title>
+<th:block id="ressources-css">
+	<link rel="stylesheet" data-th-href="@{/css/index.css}">
+	<link
+		href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css'
+		rel='stylesheet' />
+	<script
+		src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+	<script data-th-src="@{/js/calendar.js}"></script>
+	 <meta name="_csrf" th:content="${_csrf.token}"/>
+     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</th:block>
+</head>
+
+<body>
+	<main class="center-main">
+	 <div id="messages" style="display:none;">
+        <span data-th-text="#{alert.enchere.succees}"></span>
+        <span data-th-text="#{alert.enchere.echouee}"></span>
+        <span data-th-text="#{alert.enchere.afficher}"></span>
+        <span data-th-text="#{alert.enchere.encherir}"></span>
+        <span data-th-text="#{alert.enchere.confirm}"></span>
+        <span data-th-text="#{alert.enchere.offre}"></span>
+        
+        <span data-th-text="#{alert.enchere.hoover.description}"></span>
+        <span data-th-text="#{alert.enchere.hoover.debut}"></span>
+        <span data-th-text="#{alert.enchere.hoover.fin}"></span>
+        <span data-th-text="#{alert.enchere.hoover.prix.initial}"></span>
+        <span data-th-text="#{alert.enchere.hoover.enchere}"></span>
+        <span data-th-text="#{alert.enchere.hoover.meilleur.encherisseur}"></span>
+        <span data-th-text="#{alert.enchere.hoover.acquereur.null}"></span>
+    </div>
+		<h1 data-th-text="#{calendrier.vente.titre}"></h1>
+		<div id="calendar"></div>
+		<pre id="debug-info" th:text="${membreEnSession}"></pre>
+	</main>
+</body>
+</html>

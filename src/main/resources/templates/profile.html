@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{:: #ressources-css})}">
+<head>
+	<title data-th-text="#{profile.title}"></title>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/form.css}">
+	</th:block>
+</head>
+<body>
+	<main>
+		<form class="flex-outer" data-th-action="@{/profile?pseudo=}+${pseudo}" method="post">
+			<h1 data-th-text="${utilisateur.pseudo}"></h1>
+			<ul>
+				<li>
+					<label data-th-text="#{profile.prenom}"></label> 
+					<input data-th-field="${utilisateur.prenom}" disabled="disabled">
+				</li>
+				<li>
+					<label data-th-text="#{profile.nom}"></label> 
+					<input data-th-field="${utilisateur.nom}" disabled="disabled">
+				</li>
+				<li>
+					<label data-th-text="#{profile.email}"></label> 
+					<input data-th-field="${utilisateur.email}" disabled="disabled">
+				</li>
+				<li>
+					<label data-th-text="#{profile.telephone}"></label> 
+					<input data-th-field="${utilisateur.telephone}" disabled="disabled">
+				</li>
+				<li data-th-if="${membreEnSession.pseudo != utilisateur.pseudo}"><a class="button" data-th-href="@{/}" data-th-text="#{profile.retour.button}"></a></li>
+				<li data-th-if="${membreEnSession.pseudo == utilisateur.pseudo}"><a class="button" data-th-href="@{/monprofile/modifier}" data-th-text="#{profile.modifier.button}"></a></li>
+				<li data-th-if="${#authorization.expression('hasRole(''ADMIN'')') && membreEnSession.pseudo != utilisateur.pseudo}"><button type="submit" value="suppression" data-th-text="#{administration.suppr.button}"></button></li>
+			</ul>
+		</form>
+	</main>
+</body>
+</html>

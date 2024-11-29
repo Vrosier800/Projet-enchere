@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere( 
+                    titrePage=~{:: title},
+                    contenuPage=~{:: main},
+                    ressourcesSupp=~{:: #ressources-css})}">
+
+<head>
+<title data-th-text="#{article.titre}"></title>
+<th:block id="ressources-css">
+	<link rel="stylesheet" data-th-href="@{/css/index.css}">
+	<link rel="stylesheet" data-th-href="@{/css/form.css}">
+	<link rel="stylesheet" data-th-href="@{/css/error.css}">
+</th:block>
+</head>
+
+<body>
+	<main>
+		<form data-th-action="@{/article/modifier}" method="POST"
+			data-th-object=${articleAVendre}>
+			<h1 data-th-text="#{creer.titre.modifier}"></h1>
+			<div data-th-replace="~{fragments/fragment-article :: frag-form-article}"></div>
+			<input type="hidden" name="id" th:value="${articleAVendre.id}" />
+			<ul class="flex-outer">
+				<li>
+					<button type="submit" data-th-text="#{creer.input.modifier}"></button>
+				</li>
+				<li>
+					<a class="button" data-th-text="#{creer.input.annuler}" data-th-href="@{/article/annuler(id=${articleAVendre.id})}"></a>
+				</li>
+			</ul>
+		</form>
+	</main>
+</body>
+</html>

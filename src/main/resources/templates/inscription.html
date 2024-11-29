@@ -1,0 +1,95 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{:: #ressources-css})}">
+<head>
+	<title data-th-text="#{inscription.title}"></title>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/form.css}">
+		<link rel="stylesheet" data-th-href="@{/css/error.css}">
+	</th:block>
+</head>
+<body>
+	<main>
+		<form data-th-action="@{/inscription}" method="post" data-th-object="${utilisateur}">
+			<h1 class="inscriptionH1" data-th-text="#{inscription.h1}"></h1>
+			<div data-th-replace="~{fragments/errors/fragment-errors :: frag-errors}"></div>
+			<ul class="flex-outer">
+				<li>
+					<label for="pseudo" data-th-text="#{inscription.pseudo}"></label>
+					<input name="pseudo" id="pseudo">
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('pseudo')}"></div>
+					
+					<label for="nom" data-th-text="#{inscription.nom}"></label>
+					<input name="nom" id="nom">
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('nom')}"></div>
+					
+				</li>
+				<li>
+					<label for="prenom" data-th-text="#{inscription.prenom}"></label>
+					<input name="prenom" id="prenom">
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('prenom')}"></div>
+					
+					<label for="email" data-th-text="#{inscription.email}"></label>
+					<input type="email" name="email" id="email">
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('email')}"></div>
+					
+				</li>
+				<li>
+					<label data-th-text="#{inscription.telephone}"></label>
+					<input name="telephone">
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('telephone')}"></div>
+					
+				</li>
+				<li>
+					<label data-th-text="#{inscription.adresse}"></label>
+					<input name="adresse.rue" data-th-placeholder="#{inscription.adresse.rue.placeholder}">
+					<input name="adresse.codePostal" data-th-placeholder="#{inscription.adresse.code-postal.placeholder}">
+					<input name="adresse.ville" data-th-placeholder="#{inscription.adresse.ville.placeholder}">
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('adresse')}"></div>
+					
+				</li>
+				<li>
+					<label for="motDePasse" data-th-text="#{inscription.mot-de-passe}"></label>
+					<input name="motDePasse" id="motDePasse">
+					<label for="confirmerMotDePasse" data-th-text="#{inscription.comfirmer-mot-de-passe}"></label>
+					<input name="confirmerMotDePasse" id="confirmerMotDePasse">
+					<script th:inline="javascript">
+						/*<![CDATA[*/
+
+    						var password = document.getElementById("motDePasse")
+  							, confirm_password = document.getElementById("confirmerMotDePasse");
+
+							function validatePassword(){
+  								if(password.value != confirm_password.value) {
+    								confirm_password.setCustomValidity(/*[[#{inscription.mdp.confirmation}]]*/);
+  								} else {
+    								confirm_password.setCustomValidity('');
+  								}
+							}
+
+							password.onchange = validatePassword;
+							confirm_password.onkeyup = validatePassword;
+
+						/*]]>*/
+					</script>
+					
+						<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('motDePasse')}"></div>
+					
+				</li>
+				<li>
+					<button type="submit" data-th-text="#{inscription.button}"></button>
+				</li>
+				<li>
+					<a class="button" type="cancel" data-th-href="@{/login}" data-th-text="#{inscription.annuler}"></a>
+				</li>
+			</ul>
+		</form>
+	</main>
+</body>
+</html>

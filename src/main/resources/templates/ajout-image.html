@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title},
+						contenuPage=~{:: main},
+						ressourcesSupp=~{:: #ressources-css})}">
+<head>
+	<title data-th-text="#{profile.title}"></title>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/ajout-image.css}">
+		<link rel="stylesheet" data-th-href="@{/css/error.css}">
+	</th:block>
+</head>
+<body>
+	<main>
+	    <form id="uploadForm" data-th-action="@{/article/image}" method="POST" enctype="multipart/form-data">
+	        <h2>Ajouter une photo</h2>
+	        <th:block data-th-if="${msg}">
+                <p class="cards" data-th-text="#{${msg}}"></p>
+            </th:block>
+            <div class="container">
+		        <input type="file" id="fichier" name="fichier" accept="image/*">
+		        <input type="hidden" name="id" data-th-value="${id}">  
+		        <button class="submit" type="submit">Enregistrer la photo</button>
+		        <button class="cancel" onclick="window.location.href('/')">Annuler</button>
+	        </div>
+	    </form>
+	</main>
+</body>
+</html>

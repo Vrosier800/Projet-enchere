@@ -1,0 +1,52 @@
+@charset "UTF-8";
+li{
+	
+	list-style-type: none;
+}
+
+form {
+	background-color: #f2f2f2;
+}
+
+form h1 {
+	margin: 15px;
+}
+
+
+.flex-outer li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.flex-outer>li>label {
+	flex: 1 0 20px;
+	max-width: 220px;
+}
+
+.flex-outer>li>label+* {
+	flex: 1 0 220px;
+}
+
+li button, 
+li .button, .button {
+	text-decoration: none;
+	cursor: pointer;
+	margin-left: auto;
+	padding: 10px 20px;
+	border: none;
+	background-color: #333;
+	color: #f2f2f2;
+	text-transform: uppercase;
+	letter-spacing: .09em;
+	border-radius: 5px;
+	font-size: 14px;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+li button:hover, 
+li .button:hover,
+.button:hover {
+	background-color: #555;
+	transform: scale(1.05);
+}

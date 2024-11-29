@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-fragment="layout-enchere(titrePage, contenuPage, ressourcesSupp)">
+<head>
+<meta charset="UTF-8">
+<title data-th-replace="${titrePage}" data-th-text="#{nom-application}"></title>
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+<link rel="stylesheet" data-th-href="@{/css/layout.css}">
+
+<th:block data-th-replace="${ressourcesSupp} ?: ~{}"></th:block>
+<script>
+	const params = new URLSearchParams(window.location.search);
+	const selectedLanguage = params.get('language');
+	if (selectedLanguage) {
+		localStorage.setItem('userLanguage', selectedLanguage);
+	}
+</script>
+<link rel="icon" data-th-href="@{/images/logoEnchere.png}" sizes="32x32">
+</head>
+<body>
+
+	<header>
+		<section id="nav-title">
+			<a data-th-href="@{/}"><img class="logo"
+				data-th-src="@{/images/logoEnchere.png}"
+				data-th-alt="#{layout.img.alt}"></a>
+			<h1 class="titre-presentation">
+				<span data-th-text="#{nom-application}"></span>
+			</h1>
+			<div>
+				<a href="/?language=fr"><img
+					data-th-src="@{/images/French.webp}" alt="FR"></a> <a
+					href="/?language=en"><img data-th-src="@{/images/English.webp}"
+					alt="EN"></a>
+			</div>
+		</section>
+		<nav>
+			<ul>
+				<li><a data-th-href="@{/}" data-th-text="#{layout.a.accueil}"></a></li>
+				<li data-th-if="${!#authorization.expression('isAuthenticated()')}">
+					<a data-th-href="@{/login}" data-th-text="#{layout.a.login}"></a>
+				</li>
+				<th:block
+					data-th-if="${#authorization.expression('isAuthenticated()')}">
+					<li data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"><a
+						data-th-href="@{/administration}" data-th-text="#{layout.admin.a}"></a></li>
+					<li><a data-th-href="@{/article/calendrier}"
+						data-th-text="#{layout.calendrier.a}"></a></li>
+					<li><a data-th-href="@{/article/creer}"
+						data-th-text="#{layout.a.vente}"></a></li>
+					<li><a data-th-href="@{/monprofile}"
+						data-th-text="#{layout.a.profil}"></a></li>
+					<li><a data-th-href="@{/logout}"
+						data-th-text="#{layout.a.deconnexion}"></a></li>
+				</th:block>
+			</ul>
+		</nav>
+	</header>
+	<!-- Section Date et Profil -->
+	<div class="date_profil profil">
+		<div class="date"
+			data-th-text="#{layout.span.date} + ' ' + ${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></div>
+		<div
+			data-th-if="${#authorization.expression('isAuthenticated()')}">
+			<div
+				data-th-if="${membreEnSession != null && membreEnSession.pseudo != null}"
+				data-th-text="#{layout.span.pseudo} + ' ' + ${membreEnSession.pseudo}"></div>
+			<div
+				data-th-if="${membreEnSession != null && membreEnSession.pseudo != null}"
+				data-th-text="#{layout.span.credit} + ' ' + ${membreEnSession.credit}"></div>
+		</div>
+	</div>
+	<main data-th-replace="${contenuPage} ?: ~{}"></main>
+
+	<footer>
+		<p data-th-text="'&copy; ' + #{layout.p}"></p>
+	</footer>
+
+</body>
+</html>

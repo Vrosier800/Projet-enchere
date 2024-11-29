@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{:: #ressources-css})}">
+<head>
+	<title data-th-text="#{modifier-profile.title}"></title>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/form.css}">
+		<link rel="stylesheet" data-th-href="@{/css/error.css}">
+	</th:block>
+</head>
+<body>
+	<main>
+		<form data-th-action="@{/monprofile/modifier}" method="post" data-th-object="${membreEnSession}">
+			<h1 data-th-text="#{modifier-profile.h1}"></h1>
+			<div data-th-replace="~{fragments/errors/fragment-errors :: frag-errors}"></div>
+			<ul class="flex-outer">
+				<li>
+					<label for="pseudo" data-th-text="#{modifier-profile.pseudo}"></label>
+					<input name="pseudo" id="pseudo" data-th-value="*{pseudo}" disabled="disabled">
+					
+					<label for="nom" data-th-text="#{modifier-profile.nom}"></label>
+					<input name="nom" id="nom" data-th-value="*{nom}">
+					
+				</li>
+				<li>
+					<label for="prenom" data-th-text="#{modifier-profile.prenom}"></label>
+					<input name="prenom" id="prenom" data-th-value="*{prenom}">
+					
+					
+					<label for="email" data-th-text="#{modifier-profile.email}"></label>
+					<input type="email" name="email" id="email" data-th-value="*{email}">
+					
+				</li>
+				<li>
+					<label data-th-text="#{modifier-profile.telephone}"></label>
+					<input name="telephone" data-th-value="*{telephone}">	
+					
+				</li>
+				<li>
+					<label data-th-text="#{modifier-profile.adresse}"></label>
+					<input name="adresse.rue" data-th-value="*{adresse.rue}">
+					<input name="adresse.codePostal" data-th-value="*{adresse.codePostal}">
+					<input name="adresse.ville" data-th-value="*{adresse.ville}">
+					
+				</li>
+				<li>
+					<label data-th-text="#{modifier-profile.credit}"></label>
+					<input data-th-value="*{credit}" disabled="disabled"></input>
+				</li>
+				<li>
+					<button type="submit" data-th-text="#{modifier-profile.button}"></button>
+					<a class="button" type="cancel" data-th-href="@{/monprofile/modifier/motdepasse}" data-th-text="#{modifier-profile.modifier.mdp}"></a>
+					<a class="button" type="cancel" data-th-href="@{/monprofile/modifier/supression}" data-th-text="#{modifier-profile.supprimer}"></a>
+					<a class="button" type="cancel" data-th-href="@{/monprofile}" data-th-text="#{modifier-profile.annuler}"></a>
+				</li>
+			</ul>
+		</form>
+	</main>
+</body>
+</html>

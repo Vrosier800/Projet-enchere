@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+p {
+	margin: 3px;
+}
+
+h2{
+	margin: 5px;
+}
+
+.cards {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   background-color: #ff6a6a;
+	margin: 5px;
+}

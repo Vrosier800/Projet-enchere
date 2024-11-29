@@ -1,0 +1,22 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, 
+			contenuPage=~{:: main}, 
+			ressourcesSupp=~{:: #ressources-css})}">
+<head>
+	<title data-th-text="#{login.title}"></title>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/general.css}">
+		<link rel="stylesheet" data-th-href="@{/css/form.css}">
+		<link rel="stylesheet" data-th-href="@{/css/expiration.css}">
+	</th:block>
+</head>
+<body>
+	<main>
+		<h1 data-th-text="#{invalidsession.span}"></h1>
+		<ul>
+			<li><a class="button" data-th-href="@{/}" data-th-text="#{layout.a.accueil}"></a></li>
+		</ul>
+	</main>
+</body>
+</html>

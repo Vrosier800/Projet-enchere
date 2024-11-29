@@ -1,0 +1,121 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{:: #ressources-css})}">
+<head>
+	<title data-th-text="#{login.title}"></title>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/article.css}">
+		<link rel="stylesheet" data-th-href="@{/css/general.css}">
+		<link rel="stylesheet" data-th-href="@{/css/form.css}">
+		<link rel="stylesheet" data-th-href="@{/css/error.css}">
+		<script data-th-src="@{/js/retrait.js}" defer></script>
+	</th:block>
+</head>
+<body>
+	<main>
+		<h2 data-th-text="#{detail.h2.titre}"></h2>
+		
+		<h2 data-th-if="${ (article.statut == 2 || article.statut == 3) && membreEnSession.pseudo != enchere.acquereur.pseudo}" 
+		data-th-text="#{enchere.gagnee.vendeur} + ' '+ ${enchere.acquereur.pseudo}"></h2>
+		
+		<h2 data-th-if="${(article.statut == 2 || article.statut == 3) && membreEnSession.pseudo == enchere.acquereur.pseudo}" 
+		data-th-text="#{enchere.gagnee.acquereur}"></h2>
+		
+		<table class="premierTableau">
+			<tr>
+				<th data-th-text="#{detail.tr.article}"></th>
+				<td data-th-text="${article.nom}"></td>
+				<th data-th-text="#{detail.th.article}"></th>
+				<td data-th-text="${article.prixInitial} + ' point(s)'"></td>
+			</tr>
+			<tr>
+				<th data-th-text="#{detail.tr.categorie}"></th>
+				<td data-th-text="${article.categorie.libelle}"></td>
+				<th data-th-text="#{detail.th.categorie}"></th>
+				    <td data-th-if="${enchere != null}" data-th-text="${enchere.montant}"></td>
+    				<td data-th-if="${enchere == null}" data-th-text="#{detail.td.null}"></td>
+			</tr>
+			<tr>
+				<th data-th-text="#{detail.th.description}"> :</th>
+				<td data-th-text="${article.description}"></td>
+				<th data-th-text="#{detail.th.fin}"></th>
+				<td data-th-text="${article.DateFinEncheres}"></td>
+			</tr>
+		</table>
+
+		<table class="deuxiemeTableau">
+			<tr>
+				<th data-th-text="#{detail.th.retrait}"></th>
+				<td data-th-text="${article.retrait.rue}"></td>
+			</tr>
+			<tr>
+				<th data-th-text="#{detail.th.vendeur}"></th>
+				<td data-th-text="${article.vendeur.pseudo}"></td>
+			</tr>
+		</table>
+		
+        <th:block data-th-if="${#authorization.expression('isAuthenticated()')}">
+	        <div data-th-if="${membreEnSession.pseudo == article.vendeur.pseudo && (article.statut == 0 || article.statut == 1)}">
+		        <a data-th-href="@{/article/image(id=${article.id})}"><!-- 		internationaliser -->
+		        	<th:block data-th-if="${image == null}">
+		        		<button class="telechargement-btn">Telecharger une image pour votre article</button>
+		        	</th:block>
+		        	<th:block data-th-if="${image != null}">
+		        		<button class="telechargement-btn">Modifier l'image de votre article</button>
+		        	</th:block>
+		        </a>
+	        </div>
+        </th:block>
+
+<!-- 	AFFICHAGE DES IMAGES  -->
+		<th:block data-th-if="${image == null}">
+			<div class="image-container">
+				<img src="/images/King.png" alt="Image de l'article">
+			</div>
+		</th:block>
+		<th:block data-th-if="${image != null}">
+			<div class="image-container">
+				<img data-th-src="@{${image}}">
+			</div>
+		</th:block>
+			
+			<form class="flex-outer" data-th-action="@{/enchere/encherir}" method="POST" data-th-object="${newEnchere}"
+			data-th-if="${membreEnSession.pseudo != article.vendeur.pseudo && article.statut == 1}">
+			<h1 data-th-text="#{detail.h1.encherir}"></h1>
+			<div data-th-replace="~{fragments/errors/fragment-errors :: frag-errors}"></div>
+			    <ul>
+			        <li>
+			            <label for="inputMontant" data-th-text="#{detail.label.enchere}"></label>
+			            <input type="number" id="inputMontant" data-th-field="*{montant}">
+			            <div data-th-replace="~{fragments/errors/fragment-error :: frag-error('montant')}"></div>
+			            <input type="hidden" data-th-field="*{articleAVendre.id}" />
+			        </li>
+			        <li class="enchere-container"><!-- 		internationaliser -->
+			            <button class="enchere-btn" type="submit">Enchérir</button>
+			        </li>
+			    </ul>
+			</form>
+			
+			
+		<div data-th-if="${article.statut==2}" id="donnees" style="display:none;">
+			<span data-th-text="${article.id}"></span>
+			<span data-th-text="${enchere.acquereur.pseudo}"></span>
+			<span data-th-text="${article.prixVente}"></span>
+			<span data-th-text="#{alert.retrait.credit}"></span>
+		</div>
+		
+		<div class="button-container">
+			<a class="button" data-th-href="@{/}" data-th-text="#{detail.btn.retour}"></a>
+			<div class="modif" data-th-if="${membreEnSession.pseudo == article.vendeur.pseudo && article.statut == 0}">
+                   <a class="button" data-th-href="@{/article/modifier(id=${article.id})}" data-th-text="#{article.modifier.annuler}"></a>
+            </div>
+		</div>
+		<div class="retrait"
+			data-th-if="${membreEnSession.pseudo == article.vendeur.pseudo && article.statut == 2}">
+			<a class="button" id="retrait"
+				data-th-text="#{enchere.retrait.input}"></a>
+		</div>
+	</main>
+	
+</body>
+</html>

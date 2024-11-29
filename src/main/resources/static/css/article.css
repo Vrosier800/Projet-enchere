@@ -1,0 +1,139 @@
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 16px;
+    border: 1px solid #ddd;
+}
+
+.premierTableau {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.premierTableau tr {
+    display: flex;
+}
+
+.premierTableau tr th {
+    width: 25%;
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.premierTableau tr td {
+    width: 25%;
+    padding-right: 10px;
+}
+
+.premierTableau tr td:nth-child(odd) {
+    padding-right: 20px;
+}
+
+.deuxiemeTableau {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.image-container img {
+    max-width: 25%;
+    height: auto;
+}
+
+.button-container {
+    text-align: right;
+    position: fixed;
+    bottom: 50px; right: 50px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-container button:hover {
+    background-color: #555;
+}
+
+.enchere-container {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enchere-btn {
+    flex-direction: row;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+label {
+	font-size:16px;
+	margin-right: 5px;
+}
+
+#inputMontant {
+    width: 10%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 400ms ease;
+}
+
+#inputMontant:focus {
+    border-color: #333;
+    outline: none;
+}
+
+.telechargement-btn {
+	padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.telechargement-btn:hover {
+    background-color: #555;
+}
+
+#retrait{
+    text-align:left;
+    position:fixed;
+    bottom: 41px;
+    left:41px;
+}
+
+.modif {
+    text-align:left;
+    position:fixed;
+    bottom: 57px;
+    left:41px;
+}

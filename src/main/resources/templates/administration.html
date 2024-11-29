@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout-enchere( 
+                    titrePage=~{:: title},
+                    contenuPage=~{:: main},
+                    ressourcesSupp=~{:: #ressources})}">
+
+<head>
+    <title data-th-text="#{administration.titre}"></title>
+    <th:block id="ressources">
+        <link rel="stylesheet" data-th-href="@{/css/index.css}">
+    </th:block>
+</head>
+
+<body>
+    <main class="center-main">
+<main class="center-main">
+    <!-- Formulaire de filtre combiné -->
+    <div class="form-container">
+        <h2 data-th-text="#{administration.h2}"></h2>
+        <form data-th-action="@{/administration}" method="POST" id="form-filtre-combine">
+            <!-- Recherche par nom -->
+            <label for="search" data-th-text="#{administration.label}"></label>
+            <input type="text" id="search" name="search" data-th-placeholder="#{administration.input.placeholder}">
+
+            <!-- Boutons de recherche et d'annulation -->
+            <div class="button-container">
+                <button type="submit" data-th-text="#{administration.submit}"></button>
+            </div>
+        </form>
+    </div>
+</main>
+
+        <!-- Liste des enchères -->
+        <h1 data-th-text="#{administration.h1}"></h1>
+        <div class="user-grid">
+            <div data-th-each="user : ${users}" class="user-container">
+                <a data-th-href="@{/profile(pseudo=${user.pseudo})}">
+                   <div class="user-title">
+                        <h2 data-th-text="${user.pseudo}"></h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

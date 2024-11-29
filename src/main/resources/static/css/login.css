@@ -1,0 +1,106 @@
+.login-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-title {
+	text-align: center;
+	font-size: 24px;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+.flex-outer {
+	list-style: none;
+	padding: 0;
+	margin-bottom: 1px;
+}
+
+.flex-outer li {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 5px;
+}
+
+label {
+	font-size: 17px;
+	color: #555;
+	margin-bottom: 1px;
+}
+
+input {
+	width: 45%;
+	max-height: 25px;
+	padding: 5px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+	transition: border-color 0.3s ease;
+	margin-bottom: 0;
+	margin-top:5px;
+	
+}
+
+input:focus {
+	border-color: #333;
+	outline: none;
+}
+
+#show-password {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+}
+
+#show-password input[type="checkbox"] {
+	margin-right: 5px;
+}
+
+.submit-btn, 
+.cancel-btn {
+	width: 100%;
+	padding: 12px;
+	font-size: 16px;
+	background-color: #333;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover, 
+.cancel-btn:hover {
+	background-color: #555;
+}
+
+.forgot-link {
+	display: block;
+	text-align: right;
+	margin-top: 10px;
+	font-size: 14px;
+	color: #555;
+	text-decoration: none;
+}
+
+.forgot-link:hover {
+	color: #333;
+}
+
+.error-message, 
+.logout-message {
+	text-align: center;
+	color: red;
+	margin-bottom: 10px;
+}
+
+.btn-right{
+	position:relative;
+	right: 10px;
+}
+
+/* .show-password{ */
+/* 	position:relative; */
+/* 	left: 270px; bottom: 24px; */
+/* } */
